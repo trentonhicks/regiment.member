@@ -1,15 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-    pages: {
-        name: string;
-        description: string;
-        path: string;
-        icon: any;
-        iconColor: string;
-    }[];
-}>();
 
 const { setTitle } = useTitle();
+const { pages } = usePages();
 
 onMounted(() => {
     setTitle('Dashboard');
@@ -19,7 +11,7 @@ onMounted(() => {
 <template>
     <div>
         <PageList
-            :pages="pages.filter(x => x.path !== '/')"
+            :pages="pages.filter(x => x.path !== '/' && x.path !== '/checklists')"
         />
     </div>
 </template>

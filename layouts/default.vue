@@ -11,13 +11,7 @@ import {
   MenuItems
 } from '@headlessui/vue';
 
-import {
-  Bars3Icon,
-  XMarkIcon,
-  DocumentDuplicateIcon,
-  HomeIcon,
-  CheckCircleIcon,
-} from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 
 type DefaultLayoutProps = {
     user: User;
@@ -26,34 +20,9 @@ type DefaultLayoutProps = {
 
 defineProps<DefaultLayoutProps>();
 
+const { pages } = usePages();
 const route = useRoute();
-const { title } = useTitle();
-const page = computed(() => pages.find(x => x.path === route.path));
-
-const pages =
-[
-    {
-      name: 'Dashboard',
-      description: 'Welcome to Regiment.',
-      path: '/',
-      icon: HomeIcon,
-      iconColor: 'bg-purple-500',
-    },
-    {
-      name: 'Checklists',
-      description: 'View and complete checklists.',
-      path: '/checklists',
-      icon: CheckCircleIcon,
-      iconColor: 'bg-green-500',
-    },
-    {
-      name: 'Courses',
-      description: 'View courses and take quizzes.',
-      path: '/courses',
-      icon: DocumentDuplicateIcon,
-      iconColor: 'bg-purple-500',
-    },
-];
+const currentPage = computed(() => pages.value.find(x => x.path === route.path));
 </script>
 
 <template>
@@ -62,9 +31,9 @@ const pages =
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-              <div class="shrink-0">
+              <NuxtLink class="shrink-0" to="/">
                 <img class="h-8 w-auto" src="~/assets/images/logo.png" alt="Regiment" />
-              </div>
+              </NuxtLink>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                   <NuxtLink
@@ -159,13 +128,13 @@ const pages =
       </Disclosure>
 
       <main class="bg-gray-100 min-h-screen">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8" v-if="page">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8" v-if="currentPage">
           <PageHeader
-            :title="page.name"
-            :description="page.description"
+            :title="currentPage.name"
+            :description="currentPage.description"
           />
           <div class="mt-6">
-            <slot :pages="pages" />
+            <slot />
           </div>
         </div>
       </main>

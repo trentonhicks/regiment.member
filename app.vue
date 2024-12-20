@@ -15,11 +15,7 @@ const signingUp = ref(false);
             :user="user"
             :logout="logout"
           >
-            <template #default="{ pages }">
-              <NuxtPage
-                :pages="pages"
-              />
-            </template>
+            <NuxtPage />
           </NuxtLayout>
         </div>
       </template>
