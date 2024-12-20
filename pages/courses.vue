@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { setTitle } = useTitle();
+const { courses } = useCourses();
 
 onMounted(() => {
     setTitle('Courses');
@@ -7,6 +8,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="text-gray-900">
+        {{ courses }}
     </div>
 </template>

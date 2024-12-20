@@ -22,9 +22,9 @@ const password = ref('');
     >
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img class="mx-auto h-10 w-auto" src="~/assets/images/logo.png" alt="Regiment" />
-        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-            <span v-if="signingUp">Sign up for Regiment</span>
-            <span v-else>Sign in to Regiment</span>
+        <h2 class="mt-6 text-center text-2xl font-bold text-white">
+            <span v-if="!signingUp">Sign in to Regiment</span>
+            <span v-else>Sign up for Regiment</span>
         </h2>
       </div>
   
@@ -66,8 +66,7 @@ const password = ref('');
   
         <template v-if="!signingUp">
             <p class="mt-10 text-center text-sm/6 text-gray-500">
-                Don't have an account?
-                {{ ' ' }}
+                Don't have an account?<br />
                 <button
                     class="font-semibold text-indigo-400 hover:text-indigo-300"
                     @click="() => emit('update:signingUp', true)"
@@ -78,8 +77,7 @@ const password = ref('');
         </template>
         <template v-else>
             <p class="mt-10 text-center text-sm/6 text-gray-500">
-                Already have an account?
-                {{ ' ' }}
+                Already have an account?<br />
                 <button
                     class="font-semibold text-indigo-400 hover:text-indigo-300"
                     @click="() => emit('update:signingUp', false)"

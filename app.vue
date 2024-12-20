@@ -10,16 +10,18 @@ const signingUp = ref(false);
       </template>
 
       <template #authenticated="{ user, logout }">
-        <AuthLayout
-          :user="user"
-          :logout="logout"
-        >
-          <template #default="{ pages }">
-            <NuxtPage
-              :pages="pages"
-            />
-          </template>
-        </AuthLayout>
+        <div>
+          <NuxtLayout
+            :user="user"
+            :logout="logout"
+          >
+            <template #default="{ pages }">
+              <NuxtPage
+                :pages="pages"
+              />
+            </template>
+          </NuxtLayout>
+        </div>
       </template>
 
       <template #unauthenticated="{ login, register, error }">
