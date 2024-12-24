@@ -1,16 +1,54 @@
 <script setup lang="ts">
-import { ClipboardDocumentCheckIcon } from '@heroicons/vue/20/solid';
+import { ClipboardDocumentCheckIcon, ArrowUturnLeftIcon } from '@heroicons/vue/20/solid';
+import type { QuizResult } from '~/types/QuizResult';
 
 definePageMeta({ props: true });
 
 const { courseId, lessonId } = defineProps<{ courseId: string; lessonId: string }>();
 const { setTitle } = useTitle();
+const { getQuizResult, addQuizResult } = useQuizResults();
 const courses = useCourses();
 const course = computed(() => courses.value.find((c) => c.id === courseId));
 const lesson = computed(() => course.value?.lessons.find((l) => l.id === lessonId));
+const quizResult = ref<QuizResult | null>(null);
+const showQuiz = ref(false);
+const loadingQuiz = ref(true);
 
-onMounted(() => {
+async function submitQuiz(completed: boolean) {
+    if (!lesson.value || !lesson.value.quiz) {
+        return;
+    }
+
+    const newResult : QuizResult = {
+        _id: lesson.value.quiz.id,
+        attempts: quizResult.value ? quizResult.value.attempts + 1 : 1,
+        completed: completed,
+    };
+
+    await addQuizResult(newResult);
+
+    quizResult.value = newResult;
+}
+
+onMounted(async () => {
     setTitle('Courses');
+
+    try {
+        loadingQuiz.value = true;
+
+        if (!lesson.value) {
+            return;
+        }
+
+        if (!lesson.value.quiz) {
+            return;
+        }
+
+        quizResult.value = await getQuizResult(lesson.value.quiz.id);
+    }
+    finally {
+        loadingQuiz.value = false;
+    }
 });
 </script>
 
@@ -31,6 +69,7 @@ onMounted(() => {
                     },
                 ]"
             />
+
             <PageHeader
                 :title="lesson.title"
                 :description="lesson.description"
@@ -40,22 +79,58 @@ onMounted(() => {
                 :src="lesson.videoUrl"
                 class="max-w-lg"
             />
-            
-            <template v-if="lesson.quiz">
-                <div class="sm:hidden">
-                    <ButtonInput
-                        :prepend-icon="ClipboardDocumentCheckIcon"
-                        text="Begin Quiz"
-                        block
-                    />
-                </div>
 
-                <div class="hidden sm:block">
-                    <ButtonInput
-                        :prepend-icon="ClipboardDocumentCheckIcon"
-                        text="Begin Quiz"
+            <template v-if="!loadingQuiz && lesson.quiz">
+
+                <template v-if="!quizResult?.completed">
+                    <div class="sm:hidden">
+                        <ButtonInput
+                            @click="showQuiz = true"
+                            :prepend-icon="quizResult ? ArrowUturnLeftIcon : ClipboardDocumentCheckIcon"
+                            :text="quizResult ? 'Retry Quiz' : 'Begin Quiz'"
+                            block
+                        />
+                    </div>
+
+                    <div class="hidden sm:block">
+                        <ButtonInput
+                            @click="showQuiz = true"
+                            :prepend-icon="quizResult ? ArrowUturnLeftIcon : ClipboardDocumentCheckIcon"
+                            :text="quizResult ? 'Retry Quiz' : 'Begin Quiz'"
+                        />
+                    </div>
+                </template>
+
+                <template v-else>
+                    <div class="sm:hidden">
+                        <ButtonInput
+                            :prepend-icon="ClipboardDocumentCheckIcon"
+                            text="Quiz Completed"
+                            block
+                            disabled
+                            class="opacity-50"
+                        />
+                    </div>
+
+                    <div class="hidden sm:block">
+                        <ButtonInput
+                            :prepend-icon="ClipboardDocumentCheckIcon"
+                            text="Quiz Completed"
+                            disabled
+                            class="opacity-50"
+                        />
+                    </div>
+                </template>
+                
+                <template v-if="lesson.quiz">
+                    <Quiz
+                        :lesson="lesson"
+                        :quiz="lesson.quiz"
+                        v-model="showQuiz"
+                        @quiz-completed="(quizCompleted: boolean) => submitQuiz(quizCompleted)"
                     />
-                </div>
+                </template>
+
             </template>
         </div>
     </div>
