@@ -4,14 +4,15 @@ export const courses : Course[] = [
     {
         id: "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
         title: "Introduction to TypeScript",
+        description: "Learn the basics of TypeScript, a superset of JavaScript that adds type annotations and other features.",
         lessons: [
             {
                 id: "2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q",
                 title: "Getting Started with TypeScript",
+                description: "In this lesson, you'll learn what TypeScript is and how to get started with it.",
                 videoUrl: "https://vimeo.com/145606754",
                 quiz: {
                     id: "3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r",
-                    title: "TypeScript Basics Quiz",
                     questions: [
                         {
                             id: "4d5e6f7g-8h9i-0j1k-2l3m-4n5o6p7q8r9s",
@@ -31,6 +32,7 @@ export const courses : Course[] = [
             {
                 id: "6f7g8h9i-0j1k-2l3m-4n5o-6p7q8r9s0t1u",
                 title: "Advanced TypeScript Features",
+                description: "In this lesson, you'll learn about some of the advanced features of TypeScript.",
                 videoUrl: "https://vimeo.com/101510662",
                 quiz: null
             }
@@ -46,7 +48,6 @@ export const courses : Course[] = [
                 videoUrl: "https://vimeo.com/10450125",
                 quiz: {
                     id: "9i0j1k2l-3m4n-5o6p-7q8r-9s0t1u2v3w4x",
-                    title: "React with TypeScript Quiz",
                     questions: [
                         {
                             id: "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",

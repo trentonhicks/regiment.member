@@ -1,6 +1,5 @@
-import { courses as data } from "~/data/courses";
+import { courses } from "~/data/courses";
 
 export function useCourses() {
-    const courses = useState('courses', () => data);
-    return { courses };
+    return useState('courses', () => courses);
 }

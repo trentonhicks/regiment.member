@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const { setTitle } = useTitle();
 const currentPage = useCurrentPage();
-const checklists = useChecklists();
+const courses = useCourses();
 
 onMounted(() => {
-    setTitle('Checklists');
+    setTitle('Courses');
 });
 </script>
 
@@ -15,8 +15,8 @@ onMounted(() => {
             :title="currentPage.name"
             :description="currentPage.description"
         />
-        <div class="text-gray-900">
-            {{ checklists }}
-        </div>
+        <CourseList
+            :courses="courses"
+        />
     </div>
 </template>

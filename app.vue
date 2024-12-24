@@ -4,30 +4,8 @@ const signingUp = ref(false);
 
 <template>
   <div class="min-h-screen bg-gray-900 text-white">
-    <AuthContext>
-      <template #loading>
-        <LoadingPage />
-      </template>
-
-      <template #authenticated="{ user, logout }">
-        <div>
-          <NuxtLayout
-            :user="user"
-            :logout="logout"
-          >
-            <NuxtPage />
-          </NuxtLayout>
-        </div>
-      </template>
-
-      <template #unauthenticated="{ login, register, error }">
-        <Login
-          :login="login"
-          :register="register"
-          :error="error"
-          v-model:signing-up="signingUp"
-        />
-      </template>
-    </AuthContext>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

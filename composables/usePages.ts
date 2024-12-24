@@ -1,5 +1,5 @@
 import {
-    DocumentDuplicateIcon,
+    PlayCircleIcon,
     HomeIcon,
     CheckCircleIcon,
 } from '@heroicons/vue/24/outline';
@@ -24,7 +24,7 @@ export function usePages() {
             name: 'Courses',
             description: 'View courses and take quizzes.',
             path: '/courses',
-            icon: DocumentDuplicateIcon,
+            icon: PlayCircleIcon,
             iconColor: 'bg-purple-500',
         },
     ]);
