@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "DEPLOY_ENV=GH_PAGES npm run generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
