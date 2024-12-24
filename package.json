@@ -13,6 +13,8 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@types/pouchdb": "^6.4.2",
+    "@types/vimeo__player": "^2.18.3",
+    "@vimeo/player": "^2.25.0",
     "lodash": "^4.17.21",
     "nuxt": "^3.14.1592",
     "pouchdb-browser": "^9.0.0",
