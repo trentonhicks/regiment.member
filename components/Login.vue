@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type LoginProps = {
-  login: (username: string, password: string) => Promise<void>;
-  register: (username: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   error?: string;
   signingUp: boolean;
 };
@@ -12,7 +12,7 @@ type LoginEmits = {
 
 const props = defineProps<LoginProps>();
 const emit = defineEmits<LoginEmits>();
-const username = ref('');
+const email = ref('');
 const password = ref('');
 </script>
 
@@ -31,12 +31,12 @@ const password = ref('');
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form
             class="space-y-6"
-            @submit.prevent="() => signingUp ? register(username, password) : login(username, password)"
+            @submit.prevent="() => signingUp ? signUp(email, password) : signIn(email, password)"
         >
           <div>
-            <label for="username" class="block text-sm/6 font-medium text-white">Username</label>
+            <label for="email" class="block text-sm/6 font-medium text-white">Email</label>
             <div class="mt-2">
-              <input type="text" name="username" id="username" autocomplete="username" required class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" v-model="username" />
+              <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" v-model="email" />
             </div>
           </div>
       

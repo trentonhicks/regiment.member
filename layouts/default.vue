@@ -6,7 +6,9 @@ import {
 } from '@headlessui/vue';
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import type { User } from '@supabase/supabase-js';
 
+const props = defineProps<{ user: User | null; signOut: () => Promise<void>; }>();
 const { pages } = usePages();
 const route = useRoute();
 </script>
