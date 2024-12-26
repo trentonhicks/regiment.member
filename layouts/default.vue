@@ -7,8 +7,13 @@ import {
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import type { User } from '@supabase/supabase-js';
+import type { Member } from '~/types/Member';
 
-const props = defineProps<{ user: User | null; signOut: () => Promise<void>; }>();
+const props = defineProps<{
+  user: User | null;
+  member?: Member;
+  signOut: () => Promise<void>;
+}>();
 const { pages } = usePages();
 const route = useRoute();
 </script>
@@ -20,7 +25,11 @@ const route = useRoute();
           <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
               <NuxtLink class="shrink-0" to="/">
-                <img class="h-8 w-auto" src="~/assets/images/logo.png" alt="Regiment" />
+                <img
+                  class="h-8 w-7 object-contain"
+                  src="~/assets/images/logo.png"
+                  alt="Regiment"
+                />
               </NuxtLink>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">

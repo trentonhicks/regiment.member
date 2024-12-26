@@ -10,12 +10,25 @@ const signingUp = ref(false);
       </template>
 
       <template #authenticated="{ user, signOut }">
-        <NuxtLayout
-          :user="user"
-          :sign-out="signOut"
-        >
-          <NuxtPage />
-        </NuxtLayout>
+        <MemberContext>
+          <template #loading>
+            <LoadingPage />
+          </template>
+
+          <template #is-member="{ member }">
+              <NuxtLayout
+                :user="user"
+                :sign-out="signOut"
+                :member="member"
+              >
+                <NuxtPage />
+              </NuxtLayout>
+          </template>
+
+          <template #not-member>
+            <NotMember />
+          </template>
+        </MemberContext>
       </template>
 
       <template #anonymous="{ signUp, signIn }">
