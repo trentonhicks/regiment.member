@@ -1,6 +1,6 @@
 
 export type QuizResult = {
-    _id: string;
+    quiz_id: string;
     attempts: number;
     completed: boolean;
 };

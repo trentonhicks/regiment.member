@@ -7,20 +7,23 @@ definePageMeta({ props: true });
 const { courseId, lessonId } = defineProps<{ courseId: string; lessonId: string }>();
 const { setTitle } = useTitle();
 const { getQuizResult, addQuizResult } = useQuizResults();
+const { getUser } = useAuth();
 const courses = useCourses();
 const course = computed(() => courses.value.find((c) => c.id === courseId));
 const lesson = computed(() => course.value?.lessons.find((l) => l.id === lessonId));
-const quizResult = ref<QuizResult | null>(null);
+const quizResult = ref<QuizResult | null>();
 const showQuiz = ref(false);
 const loadingQuiz = ref(true);
 
 async function submitQuiz(completed: boolean) {
-    if (!lesson.value || !lesson.value.quiz) {
+    const user = await getUser();
+
+    if (!lesson.value || !lesson.value.quiz || !user) {
         return;
     }
 
     const newResult : QuizResult = {
-        _id: lesson.value.quiz.id,
+        quiz_id: lesson.value.quiz.id,
         attempts: quizResult.value ? quizResult.value.attempts + 1 : 1,
         completed: completed,
     };
@@ -36,6 +39,8 @@ onMounted(async () => {
     try {
         loadingQuiz.value = true;
 
+        const user = await getUser();
+
         if (!lesson.value) {
             return;
         }
@@ -44,7 +49,11 @@ onMounted(async () => {
             return;
         }
 
-        quizResult.value = await getQuizResult(lesson.value.quiz.id);
+        if (!user) {
+            return;
+        }
+
+        quizResult.value = await getQuizResult(lesson.value.quiz.id, user.id);
     }
     finally {
         loadingQuiz.value = false;
