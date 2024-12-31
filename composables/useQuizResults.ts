@@ -2,28 +2,34 @@ import PouchDb from "pouchdb-browser";
 import type { QuizResult } from "~/types/QuizResult";
 
 export function useQuizResults() {
-    const database = new PouchDb<QuizResult>("QuizResults");
+    const supabase = useSupabase();
 
     async function addQuizResult(quizResult: QuizResult) {
-        database.get(quizResult._id).then(async (doc) => {
-            doc.attempts = quizResult.attempts;
-            doc.completed = quizResult.completed;
-
-            await database.put(doc);
-        })
-        .catch(async (error) => {
-            await database.put(quizResult);
-        });
-    }
-
-    async function getQuizResult(quizId: string) {
         try {
-            return await database.get(quizId);
+            await supabase.from("QuizResult").upsert(quizResult);
         }
-        catch {
-            return null
+        catch (error) {
+            console.error(error);
         }
     }
 
-    return { addQuizResult, getQuizResult };
+    async function getQuizResult(quizId: string, userId: string) {
+        try {
+            const result = await supabase.from("QuizResult")
+                .select()
+                .eq("quiz_id", quizId)
+                .eq("user_id", userId)
+                .single<QuizResult>();
+
+            return result.data;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    return {
+        addQuizResult,
+        getQuizResult
+    };
 }

@@ -20,11 +20,11 @@ defineProps<LessonListProps>();
             >
                 <div class="flex min-w-0 gap-x-4">
                     <div class="min-w-0 flex-auto">
-                        <p class="text-sm/6 font-semibold text-gray-900">
+                        <div class="text-sm/6 font-semibold text-gray-900">
                             <div class="relative truncate group-hover:underline">
                                 {{ lesson.title }}
                             </div>
-                        </p>
+                        </div>
                         <p class="mt-1 flex text-xs/5 text-gray-500" v-if="lesson.description">
                             {{ lesson.description }}
                         </p>
