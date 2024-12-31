@@ -53,6 +53,15 @@ const route = useRoute();
                 <XMarkIcon v-else class="block size-6" aria-hidden="true" />
               </DisclosureButton>
             </div>
+
+            <div class="hidden md:block">
+              <button
+                @click="signOut"
+                class="bg-indigo-700 hover:bg-indigo-500 text-white rounded-md px-3 py-2 text-sm font-medium"
+              >
+                <span>Sign Out</span>
+              </button>
+            </div>
           </div>
         </div>
   
@@ -61,15 +70,24 @@ const route = useRoute();
             <DisclosureButton
               v-for="item in pages"
               :key="item.name"
-              as="div"
+              as="button"
               @click="$router.push(item.path)"
               :class="[item.path === route.path
                 ? 'bg-gray-900 text-white'
-                : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium', 'transition-colors'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'w-full block text-left rounded-md px-3 py-2 text-base font-medium', 'transition-colors'
               ]"
               :aria-current="item.path === route.path ? 'page' : undefined"
             >
                 {{ item.name }}
+            </DisclosureButton>
+            <DisclosureButton
+              as="button"
+              @click="signOut"
+              :class="[
+                'text-gray-300 hover:bg-gray-700 hover:text-white', 'w-full block bg-gray-700/50 text-left rounded-md px-3 py-2 text-base font-medium transition-colors'
+              ]"
+            >
+                Sign Out
             </DisclosureButton>
           </div>
         </DisclosurePanel>
