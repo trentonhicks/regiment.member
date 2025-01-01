@@ -14,6 +14,7 @@ const props = defineProps<{
   member?: Member;
   signOut: () => Promise<void>;
 }>();
+
 const { pages } = usePages();
 const route = useRoute();
 </script>

@@ -4,5 +4,5 @@ export type Course = {
     id: string;
     title: string;
     description?: string;
-    lessons: Lesson[];
+    created_at: string;
 };

@@ -7,7 +7,7 @@ const member = ref<Member>();
 
 onMounted(async () => {
     loading.value = true;
-    const { data } = await supabase.from('Member').select('*').single();
+    const { data } = await supabase.from('members').select('*').single();
     member.value = data;
     loading.value = false;
 });

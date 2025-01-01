@@ -31,8 +31,9 @@ const signingUp = ref(false);
         </MemberContext>
       </template>
 
-      <template #anonymous="{ signUp, signIn }">
+      <template #anonymous="{ signUp, signIn, error }">
         <Login
+          :error="error"
           :sign-up="signUp"
           :sign-in="signIn"
           v-model:signing-up="signingUp"

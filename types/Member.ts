@@ -1,4 +1,5 @@
 export type Member = {
-    regimentId: number;
-    memberId: string;
+    regiment_id: number;
+    user_id: string;
+    created_at: string;
 }

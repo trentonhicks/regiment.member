@@ -4,6 +4,7 @@ const { signUp, signIn, signOut, getUser } = useAuth();
 const user = ref();
 const loading = ref(true);
 const isAuthenticated = computed(() => !!user.value);
+const error = ref<string>();
 
 async function refreshAuthStatus() {
     loading.value = true;
@@ -13,14 +14,16 @@ async function refreshAuthStatus() {
 
 async function handleSignUp(email: string, password: string) {
     loading.value = true;
-    await signUp(email, password);
+    const { error: authError } = await signUp(email, password);
+    error.value = authError?.message;
     await refreshAuthStatus();
     loading.value = false;
 }
 
 async function handleSignIn(email: string, password: string) {
     loading.value = true;
-    await signIn(email, password);
+    const { error: authError } = await signIn(email, password);
+    error.value = authError?.message;
     await refreshAuthStatus();
     loading.value = false;
 }
@@ -52,6 +55,7 @@ onMounted(async () => await refreshAuthStatus());
             name="anonymous"
             :sign-up="handleSignUp"
             :sign-in="handleSignIn"
+            :error="error"
         />
     </div>
 </template>
